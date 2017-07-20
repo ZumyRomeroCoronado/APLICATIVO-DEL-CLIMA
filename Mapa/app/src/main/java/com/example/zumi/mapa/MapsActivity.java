@@ -1,19 +1,26 @@
 package com.example.zumi.mapa;
 
+
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+
+
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
+    LatLng lima=new LatLng(-8.3751034,-74.6517595);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +45,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        String Ciudades[] ={"Espinar","camaná","nazca"
+                ,"chachapoyas","huaraz","abancay","arequipa","ayacucho","cajamarca","callao","andahuaylas","cusco","huancavelica",
+                "huanuco","ica","huancayo","trujillo","chiclayo","lima","iquitos","puerto%20maldonado",
+                "moquegua","cerro%20de%20pasco","piura","puno","moyobamba","tacna","tumbes","pucallpa","puquio","bagua"};
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
+
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
+
+
+
+
     }
+
+
+
+
+
 }
