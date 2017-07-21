@@ -3,6 +3,7 @@ package com.example.zumi.mapa;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,8 +14,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -50,20 +61,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 "huanuco","ica","huancayo","trujillo","chiclayo","lima","iquitos","puerto%20maldonado",
                 "moquegua","cerro%20de%20pasco","piura","puno","moyobamba","tacna","tumbes","pucallpa","puquio","bagua"};
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+       // LatLng sydney = new LatLng(-34, 151);//.................
 
 
+        for( int i=0; i<31; i++)
+        {
+            new ReadJSONFeedTask().execute(
+                    "http://api.openweathermap.org/data/2.5/weather?q="+Ciudades[i]+",PE&units=metric&APPID=9c390ebbe3276a74e74814962661b624");
 
+        }
 
-
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(lima,5));
     }
+/**llamamos el url para q  lea la lon lan*/
+public String readJSONFeed(String URL ){
+    StringBuilder stringBuilder = new StringBuilder();
 
-
-
-
+    HttpClient client = new DefaultHttpClient();
+    HttpGet httpGet = new HttpGet(URL);
+    try {
+        HttpResponse response = client.execute(httpGet);
+        StatusLine statusLine = response.getStatusLine();
+        int statusCode = statusLine.getStatusCode();
+        if (statusCode == 200) {
+            HttpEntity entity = response.getEntity();
+            InputStream content = entity.getContent();
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(content));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        } else {
+            Log.e("JSON", "Failed to download file");
+        }
+    } catch (ClientProtocolException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return stringBuilder.toString();
+}
 
 }
