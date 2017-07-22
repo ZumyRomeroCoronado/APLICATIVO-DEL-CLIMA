@@ -1,6 +1,7 @@
 package com.example.zumi.mapa;
 
 
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -102,5 +104,39 @@ public String readJSONFeed(String URL ){
     }
     return stringBuilder.toString();
 }
+
+    private class ReadJSONFeedTask extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... urls) {
+            return readJSONFeed(urls[0]);
+        }
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject obj = new JSONObject(result);
+                JSONObject obj1 = obj.getJSONObject("main");
+                JSONObject objcoor = obj.getJSONObject("coord");
+
+                Float latitud=Float.parseFloat(objcoor.getString("lat"));
+                Float longitud=Float.parseFloat(objcoor.getString("lon"));
+                String temperatura = obj1.getString("temp");
+                String ciudad = obj.getString("name");
+                String humedad = obj1.getString("humidity");
+                LatLng coordenada= new LatLng(latitud,longitud);
+
+                Marker ubicacion=mMap.addMarker(new MarkerOptions().position(coordenada).title("Ciudad : "+ciudad)
+                        .snippet("T : "+temperatura+" C° ; H :"+humedad+"%"));
+
+                ubicacion.showInfoWindow();
+
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+
+        }
+
+    }
 
 }
