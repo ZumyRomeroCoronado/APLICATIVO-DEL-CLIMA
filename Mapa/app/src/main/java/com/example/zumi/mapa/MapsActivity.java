@@ -142,4 +142,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+
+
+    private void CreateMenu(Menu menu)
+    {
+        MenuItem mnu1 = menu.add(0, 0, 0, "TERRENO");
+        {
+            mnu1.setAlphabeticShortcut('a');
+            mnu1.setIcon(R.mipmap.ic_launcher);
+        }
+        MenuItem mnu2 = menu.add(0, 1, 1, "HIBRIDO");
+        {
+            mnu2.setAlphabeticShortcut('a');
+            mnu2.setIcon(R.mipmap.ic_launcher);
+        }
+
+        menu.add(0, 2, 2, "SATELITE");
+        menu.add(0, 3, 3, "NONE");
+        menu.add(0, 4, 4, "NORMAL");
+        menu.add(0, 5, 5, "SALIR");
+
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        return MenuChoice(item);
+    }
+    private boolean MenuChoice(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case 0:
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                return true;
+            case 1:
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                return true;
+            case 2:
+                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                return true;
+            case 3:
+                mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+                return true;
+            case 4:
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                return true;
+
+            case 5:
+                finish();
+
+
+        }
+        return false;
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        CreateMenu(menu);
+        return true;
+    }
 }
