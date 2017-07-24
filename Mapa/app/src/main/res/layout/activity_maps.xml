@@ -42,25 +42,25 @@
         android:layout_alignParentStart="true">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/sa"
             android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="127dp"
             android:layout_height="wrap_content"
             android:text="SATELITE" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/no"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:text="NONE" />
+
+        <Button
+            android:id="@+id/nor"
             android:layout_width="129dp"
             android:layout_height="wrap_content"
             android:text="NORMAL" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/sal"
             android:layout_width="127dp"
             android:layout_height="wrap_content"
             android:text="SALIR" />

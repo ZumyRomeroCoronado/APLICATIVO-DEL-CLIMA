@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,6 +16,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -36,6 +40,10 @@ import java.io.InputStreamReader;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    Button sa;
+    Button no;
+    Button nor;
+    Button sal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +67,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        UiSettings uiSettings = mMap.getUiSettings();
+        uiSettings.setZoomControlsEnabled(true);
+
 
         LatLng lima = new LatLng(-8.3751034, -74.6517595);
 
+        mMap.addMarker(new MarkerOptions().position(lima).title("Feria Dominical de andahuaylas").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        float zoomlevel = 16;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lima, zoomlevel));
         String Ciudades[] = {"Espinar", "camaná", "nazca"
                 , "chachapoyas", "huaraz", "abancay", "arequipa", "ayacucho", "cajamarca", "callao", "andahuaylas", "cusco", "huancavelica",
                 "huanuco", "ica", "huancayo", "trujillo", "chiclayo", "lima", "iquitos", "puerto%20maldonado",
@@ -76,6 +93,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     "http://api.openweathermap.org/data/2.5/weather?q=" + Ciudades[i] + ",PE&units=metric&APPID=9c390ebbe3276a74e74814962661b624");
 
         }
+
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lima, 5));
     }
 
@@ -165,6 +184,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    //---------------------------
+
+
+
+
+    //--------------------
+
     public boolean onOptionsItemSelected(MenuItem item)
     {
         return MenuChoice(item);
@@ -195,9 +221,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return false;
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         CreateMenu(menu);
         return true;
     }
+
+
 }
