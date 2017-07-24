@@ -72,8 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     "http://api.openweathermap.org/data/2.5/weather?q="+Ciudades[i]+",PE&units=metric&APPID=9c390ebbe3276a74e74814962661b624");
 
         }
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(lima,5));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lima,5));
     }
 /**llamamos el url para q  lea la lon lan*/
 public String readJSONFeed(String URL ){
