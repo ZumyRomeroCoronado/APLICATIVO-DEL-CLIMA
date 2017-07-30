@@ -37,24 +37,68 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener{
 
     private GoogleMap mMap;
-    Button sa;
-    Button no;
-    Button nor;
-    Button sal;
+
+    LatLng lima = new LatLng(-8.3751034, -74.6517595);
+    Button bmapa;
+    Button bhibrido;
+    Button bterreno;
+    Button binterior;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        bmapa = (Button) findViewById(R.id.bmapa);
+        bhibrido = (Button) findViewById(R.id.bhibrido);
+        bterreno = (Button) findViewById(R.id.bterreno);
+        binterior=(Button) findViewById(R.id.binterior);
+
+        bmapa.setOnClickListener(this);
+        bhibrido.setOnClickListener(this);
+        bterreno.setOnClickListener(this);
+        binterior.setOnClickListener(this);
+
+
+
+
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.*/
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
+    @Override
+    public void onClick(View v) {
+switch (v.getId()){
+
+   case  R.id.bmapa:
+       mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+    break;
+    case R.id.bhibrido:
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        break;
+    case R.id.bterreno:
+        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        break;
+    case R.id.binterior:
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+
+        new LatLng(-33.8697,151.2089),18));
+
+        break;
+    default:
+        break;
+
+
+}
+    }
 
     /**
      * Manipulates the map once available.
@@ -69,17 +113,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
 
 
-        LatLng lima = new LatLng(-8.3751034, -74.6517595);
 
-        mMap.addMarker(new MarkerOptions().position(lima).title("Feria Dominical de andahuaylas").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        float zoomlevel = 16;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lima, zoomlevel));
+
         String Ciudades[] = {"Espinar", "camaná", "nazca"
                 , "chachapoyas", "huaraz", "abancay", "arequipa", "ayacucho", "cajamarca", "callao", "andahuaylas", "cusco", "huancavelica",
                 "huanuco", "ica", "huancayo", "trujillo", "chiclayo", "lima", "iquitos", "puerto%20maldonado",
@@ -161,6 +201,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+    /*
 
 
     private void CreateMenu(Menu menu)
@@ -227,6 +268,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CreateMenu(menu);
         return true;
     }
+*/
+
 
 
 }
